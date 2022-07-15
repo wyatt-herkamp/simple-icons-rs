@@ -1,6 +1,6 @@
 [package]
 name = "simple-icons-rs"
-version = "0.0.1"
+version = "7.4.0"
 edition = "2021"
 license = "MIT"
 authors = ["Wyatt Jacob Herkamp <wherkamp@kingtux.me>", "Simple Icons"]
