@@ -1,6 +1,7 @@
 #[cfg(feature = "built_icons")]
 pub mod built_icons;
-
+#[cfg(feature = "icon_loader")]
+pub mod icon_loader;
 pub trait SimpleIcon {
     fn icon(&self) -> &'static str;
 
@@ -30,16 +31,16 @@ impl SimpleIcon for NoIcon {
     fn icon(&self) -> &'static str {
         ""
     }
-    fn apply_style(&self, string: &str) -> String {
+    fn apply_style(&self, _: &str) -> String {
         String::new()
     }
-    fn apply_class(&self, string: &str) -> String {
+    fn apply_class(&self, _: &str) -> String {
         String::new()
     }
-    fn apply_fill(&self, string: &str) -> String {
+    fn apply_fill(&self, _: &str) -> String {
         String::new()
     }
-    fn apply_id(&self, string: &str) -> String {
+    fn apply_id(&self, _: &str) -> String {
         String::new()
     }
 }

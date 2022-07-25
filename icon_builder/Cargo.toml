@@ -6,13 +6,9 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-octocrab = "0.16"
 clap = { version = "3.2.12", features = ["derive"] }
 tokio = { version = "1.20.0", features = ["full"] }
-reqwest = { version = "0.11.11", features = ["stream"] }
-zip = "0.6.2"
 anyhow = "1.0.58"
-bytes = "1.1.0"
-futures-util = "0.3.21"
 genco = "0.17.1"
 convert_case = "0.5.0"
+simple-icons-rs = {path="../", features=["icon_loader"]}
