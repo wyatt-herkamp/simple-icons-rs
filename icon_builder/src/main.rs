@@ -45,7 +45,7 @@ async fn main() -> anyhow::Result<()> {
             icons_dir = Some(icons);
             break;
         }
-        let output_dir = PathBuf::from("../src/icons");
+        let output_dir = PathBuf::from("../src/built_icons");
         if !output_dir.exists() {
             create_dir_all(&output_dir).await?;
         }
@@ -54,7 +54,7 @@ async fn main() -> anyhow::Result<()> {
             for icon in icons.read_dir().unwrap() {
                 let icon = icon.unwrap();
                 let icon_content = read_to_string(icon.path()).await?;
-                let string = format!("Icon{}", icon.file_name().to_str().unwrap().replace(".svg", ""));
+                let string = format!("Icon{}", icon.file_name().to_str().unwrap().replace(".svg", "").to_case(Case::UpperCamel));
                 let struct_name = string.to_case(Case::UpperCamel);
                 let module_name = string.to_case(Case::Snake);
                 let mut options = OpenOptions::new().create_new(true).write(true).open(output_dir.join(format!("{}.rs", module_name))).await?;
@@ -63,8 +63,13 @@ async fn main() -> anyhow::Result<()> {
                 let value: Tokens<Rust> = quote! {
                     use crate::SimpleIcon;
                     pub struct $name;
+                    impl Default for $name {
+                        fn default() -> Self {
+                            $name
+                        }
+                    }
                     impl SimpleIcon for $name {
-                        fn icon() -> &'static str {
+                        fn icon(&self) -> &'static str {
                             $(quoted(icon_content))
                         }
                     }
@@ -82,7 +87,6 @@ async fn main() -> anyhow::Result<()> {
                 let string1 = module.to_file_string().unwrap();
                 options.write_all(string1.as_bytes()).await?;
             }
-
         }
     } else {
         println!("Release Not Found {}", builder.version);

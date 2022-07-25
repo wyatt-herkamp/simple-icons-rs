@@ -10,5 +10,4 @@ description = "Simple Icons built for Rust"
 [dependencies]
 
 [features]
-default = ["icons"]
-icons = []
+built_icons = []
